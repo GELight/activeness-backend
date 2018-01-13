@@ -1,0 +1,19 @@
+{
+  "name": "activeness-backend",
+  "version": "0.0.1",
+  "description": "Backend REST API of the activeness project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GELight/activeness-backend.git"
+  },
+  "author": "Mario Linz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GELight/activeness-backend/issues"
+  },
+  "homepage": "https://github.com/GELight/activeness-backend#readme"
+}
