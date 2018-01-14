@@ -24,6 +24,23 @@ server.use(restify.plugins.bodyParser());
 
 // var config = require('./resources/index');
 
+const categories = [
+    'music',
+    'excursion',
+    'event',
+    'opening',
+    'food',
+    'relaxation',
+    'dance',
+    'family',
+    'guides',
+    'culture',
+    'exhibition',
+    'market',
+    'meetup',
+    'others'
+];
+
 // 
 // Activities
 
@@ -34,7 +51,7 @@ server.get('/api/activities', function (req, res, next) {
                 id: 1,
                 version: 1,
                 active: true,
-                //categories: [1,3,6],
+                categories: [1, 3, 8],
                 date: 'Sun Jan 14 2018 22:09:36 GMT+0100 (Mitteleuropäische Zeit)',
                 title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quae cum essent dicta, finem fecimus et ambulandi et disputandi. Quasi vero, inquit, perpetua oratio rhetorum solum, non etiam philosophorum sit. Quod ea non occurrentia fingunt, vincunt Aristonem; Non enim solum Torquatus dixit quid sentiret, sed etiam cur. Sed ad bona praeterita redeamus.",
@@ -53,13 +70,27 @@ server.get('/api/activities', function (req, res, next) {
 // Categories
 
 server.get('/api/categories', function (req, res, next) {
+    let categoriesList = { categories: [] };
+    for (let i=0; i < categories.length; i++) {
+        categoriesList.categories.push({
+           id: i,
+           name: categories[i] 
+        });
+    }
+    res.send(categoriesList);
+    return next();
+});
+
+
+// 
+// Category
+
+server.get('/api/categories/:cid', function (req, res, next) {
     res.send({
-        categories: [
-            {
-                id: 1,
-                name: "music"
-            }
-        ]
+        categories: {
+            id: req.params.cid,
+            name: categories[req.params.cid]
+        }
     });
     return next();
 });
