@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/GELight/activeness-backend/issues"
   },
-  "homepage": "https://github.com/GELight/activeness-backend#readme"
+  "homepage": "https://github.com/GELight/activeness-backend#readme",
+  "dependencies": {
+    "restify": "^6.3.4"
+  }
 }

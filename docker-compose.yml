@@ -1,0 +1,60 @@
+# This compose file will start 2 containers: mongo and mongo-express. 
+# Run: sudo docker-compose up
+
+# mongo: a nosql db, store data in local /opt/data/mongo_home/
+# mongo-express: web UI for mongo listening on 8081. See https://github.com/yeasy/mongo-express
+
+# mongo:
+#     image: mongo:3.0
+#     hostname: mongo
+#     ports:
+#         - "9090:27017"
+#     # expose:
+#     #     - "27017"
+#     volumes:
+#         - /opt/data/mongo_home:/others/data/mongodb
+#     restart: always
+#     mem_limit: 1024m
+
+# mongoexpress:
+#     image: yeasy/mongo-express
+#     hostname: mongo-express
+#     links:
+#         - mongo:mongo
+#     ports:
+#         - "8081:8081"
+#     restart: always
+#     mem_limit: 128m
+#     environment:
+#         - WEB_USER='user'
+#         - WEB_PASS='pass'
+#     command: sh -c 'sleep 10 && tini -- node app'
+
+
+# Use postgres/example user/password credentials
+version: '2'
+
+services:
+
+  db:
+    image: postgres
+    container_name: activeness-database
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      # ADVERTISED_HOST: localhost
+    ports:
+      - 10000:5432
+    expose:
+      - "10000"
+
+  adminer:
+    image: adminer
+    # container_name: activeness-database-admin
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - 11000:8080
