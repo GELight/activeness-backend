@@ -44,17 +44,13 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: example
-      # ADVERTISED_HOST: localhost
     ports:
-      - 10000:5432
-    expose:
-      - "10000"
+      - 5432:5432
 
   adminer:
     image: adminer
     # container_name: activeness-database-admin
-    depends_on:
-      - db
     restart: always
+    # network_mode: host
     ports:
       - 11000:8080
