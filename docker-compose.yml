@@ -31,14 +31,13 @@
 #     command: sh -c 'sleep 10 && tini -- node app'
 
 
-# Use postgres/example user/password credentials
 version: '2'
 
 services:
 
+  # Use postgres/example user/password credentials
   db:
     image: postgres
-    container_name: activeness-database
     restart: always
     environment:
       POSTGRES_DB: postgres
@@ -49,8 +48,6 @@ services:
 
   adminer:
     image: adminer
-    # container_name: activeness-database-admin
     restart: always
-    # network_mode: host
     ports:
       - 11000:8080

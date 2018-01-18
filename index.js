@@ -1,5 +1,42 @@
-var restify = require('restify');
-var config = require('./config');
+const restify = require('restify');
+const config = require('./config');
+
+
+
+
+const { Pool, Client } = require('pg')
+// const connectionString = 'postgresql://dbuser:secretpassword@database.server.com:3211/mydb'
+
+// const pool = new Pool({
+//   connectionString: connectionString,
+// })
+
+// pools will use environment variables
+// for connection information
+const pool = new Pool({
+    user: 'postgres',
+    host: '172.17.0.1',
+    database: 'postgres',
+    password: 'example',
+    port: 5432
+})
+
+pool.query('SELECT NOW()', (err, res) => {
+    console.log(err, res)
+    pool.end()
+})
+  
+
+// postgres://172.17.0.1:5432/postgres'
+
+// PGUSER=postgres \
+// PGHOST=127.17.0.1:5432 \
+// PGPASSWORD=example \
+// PGDATABASE=postgres \
+// PGPORT=5432 \
+// node index.js
+
+
 
 const server = restify.createServer({
   name: config.server.name,
@@ -9,20 +46,6 @@ const server = restify.createServer({
 server.use(restify.plugins.acceptParser(server.acceptable));
 server.use(restify.plugins.queryParser());
 server.use(restify.plugins.bodyParser());
-
-// Setup cors
-// restify.CORS.ALLOW_HEADERS.push('accept');
-// restify.CORS.ALLOW_HEADERS.push('sid');
-// restify.CORS.ALLOW_HEADERS.push('lang');
-// restify.CORS.ALLOW_HEADERS.push('origin');
-// restify.CORS.ALLOW_HEADERS.push('withcredentials');
-// restify.CORS.ALLOW_HEADERS.push('x-requested-with');
-// server.use(restify.CORS());
-// server.use(restify.CORS({
-//     'origins': ['http://localhost:4200']
-// }));
-
-// var config = require('./resources/index');
 
 const categories = [
     'music',

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/GELight/activeness-backend#readme",
   "dependencies": {
+    "pg": "^7.4.1",
     "restify": "^6.3.4"
   }
 }
