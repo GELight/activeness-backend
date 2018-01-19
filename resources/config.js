@@ -2,7 +2,7 @@ const config = {
     server: {
         name: "activeness-backend",
         version: "1.0.0",
-        port: 4201,
+        port: 4300,
         pathPrefix: "api"
     },
     db: {
