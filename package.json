@@ -4,7 +4,8 @@
   "description": "Backend REST API of the activeness project",
   "main": "index.js",
   "scripts": {
-    "start": "clear && node index.js"
+    "rest": "node rest/init.js",
+    "database": "node database/init.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +18,9 @@
   },
   "homepage": "https://github.com/GELight/activeness-backend#readme",
   "dependencies": {
-    "liquibase": "0.0.3",
-    "pg": "^7.4.1",
-    "restify": "^6.3.4"
+    "pg": "^6.4.2",
+    "pg-hstore": "^2.3.2",
+    "restify": "^6.3.4",
+    "sequelize": "^4.31.2"
   }
 }
