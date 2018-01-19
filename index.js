@@ -1,18 +1,37 @@
+
+// http://restify.com/
 const restify = require('restify');
+
+// https://github.com/pablodenadai/node-liquibase
+const liquibase = require('liquibase');
+
+// https://node-postgres.com/
+const { Pool, Client } = require('pg')
+
+// General app configuration
 const config = require('./config');
 
 
+//
+// Liquibase
+
+liquibase({
+    // defaultsFile: 'resources/liquibase/liquibase.properties',
+    changeLogFile: 'resources/liquibase/changelog-master.xml',
+    url: 'jdbc:postgresql://172.17.0.1:5432/postgres',
+    username: 'postgres',
+    password: 'example'
+})
+// .run('<action>', '<action-params>')
+.run('update')
+.then(() => console.log('success'))
+.catch((err) => console.log('fail', err));
 
 
-const { Pool, Client } = require('pg')
-// const connectionString = 'postgresql://dbuser:secretpassword@database.server.com:3211/mydb'
 
-// const pool = new Pool({
-//   connectionString: connectionString,
-// })
+//
+// PostgreSQL Database
 
-// pools will use environment variables
-// for connection information
 const pool = new Pool({
     user: 'postgres',
     host: '172.17.0.1',
@@ -21,22 +40,18 @@ const pool = new Pool({
     port: 5432
 })
 
-pool.query('SELECT NOW()', (err, res) => {
-    console.log(err, res)
+pool.query('SELECT name FROM test', (err, res) => {
+    if (err) {
+        console.log(err)
+    }else{
+        console.log(res.rows)
+    }
     pool.end()
 })
-  
-
-// postgres://172.17.0.1:5432/postgres'
-
-// PGUSER=postgres \
-// PGHOST=127.17.0.1:5432 \
-// PGPASSWORD=example \
-// PGDATABASE=postgres \
-// PGPORT=5432 \
-// node index.js
 
 
+//
+// REST Server - restify
 
 const server = restify.createServer({
   name: config.server.name,
@@ -120,7 +135,7 @@ server.get('/api/categories/:cid', function (req, res, next) {
 
 
 //
-// Start Server Listener
+// Start REST Server Listener
 
 server.listen(config.server.port, function () {
   console.log('%s listening at %s', server.name, server.url);
